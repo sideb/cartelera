@@ -8,6 +8,15 @@ class MoviesProvider {
   String _url = 'api.themoviedb.org';
   String _language = 'es-ES';
 
+  // Método privado que procesa las respuestas de películas
+  Future<List<Movie>> _processResponse(Uri url) async {
+    final response = await http.get(url);
+    final data = json.decode(response.body);
+    final movies = new Movies.fromJsonList(data['results']);
+
+    return movies.items;
+  }
+
   // Obtiene las películas que están ahora en cartelera
   Future<List<Movie>> getNowPlaying() async {
     final url = Uri.https(_url, '3/movie/now_playing', {
@@ -15,10 +24,16 @@ class MoviesProvider {
       'language': _language,
     });
 
-    final response = await http.get(url);
-    final data = json.decode(response.body);
-    final movies = new Movies.fromJsonList(data['results']);
+    return await _processResponse(url);
+  }
 
-    return movies.items;
+  // Obtiene las películas más populares
+  Future<List<Movie>> getPopular() async {
+    final url = Uri.https(_url, '3/movie/popular', {
+      'api_key': _apikey,
+      'language': _language,
+    });
+
+    return await _processResponse(url);
   }
 }
