@@ -69,11 +69,21 @@ class Movie {
     releaseDate = json['release_date'];
   }
 
+  // Método que obtiene la imagen del poster
   getPosterImg() {
     if (posterPath == null) {
       return 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-stock-vector-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
     } else {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
+    }
+  }
+
+  // Método que obtiene la imagen del backdrop
+  geBackdropImg() {
+    if (posterPath == null) {
+      return 'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101028/112815904-stock-vector-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
+    } else {
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
     }
   }
 }
