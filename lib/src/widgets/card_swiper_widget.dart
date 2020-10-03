@@ -19,14 +19,7 @@ class CardSwipper extends StatelessWidget {
       height: _screenSize.height * 0.5,
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/img/no-image.jpg'),
-              image: NetworkImage(movies[index].getPosterImg()),
-              fit: BoxFit.cover,
-            ),
-          );
+          return _movieCard(context, movies[index]);
         },
         itemCount: movies.length,
         itemWidth: _screenSize.width * 0.7,
@@ -35,6 +28,29 @@ class CardSwipper extends StatelessWidget {
         //pagination: new SwiperPagination(),
         //control: new SwiperControl(),
       ),
+    );
+  }
+
+  ///
+  /// widget con el poster de cada película y enlace a detalle de la misma
+  ///
+  Widget _movieCard(BuildContext context, Movie movie) {
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(20.0),
+      child: FadeInImage(
+        placeholder: AssetImage('assets/img/no-image.jpg'),
+        image: NetworkImage(movie.getPosterImg()),
+        fit: BoxFit.cover,
+      ),
+    );
+
+    // A la tarjeta se le añade enlace a detalles de la película
+    return GestureDetector(
+      child: card,
+      onTap: () {
+        //print('Película: ${movie.title}');
+        Navigator.pushNamed(context, 'movie_detail', arguments: movie);
+      },
     );
   }
 }

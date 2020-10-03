@@ -37,9 +37,14 @@ class MovieDetail extends StatelessWidget {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
+        titlePadding: EdgeInsets.symmetric(vertical: 10.0),
         title: Text(
           movie.title,
-          style: TextStyle(color: Colors.white, fontSize: 16.0),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+            //backgroundColor: Color.fromRGBO(0, 0, 0, 0.5)
+          ),
         ),
         background: FadeInImage(
             placeholder: AssetImage('assets/img/loading.gif'),
