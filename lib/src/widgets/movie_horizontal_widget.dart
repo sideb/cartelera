@@ -31,43 +31,45 @@ class MovieHorizontal extends StatelessWidget {
     // Contenedor principal del widget
     return Container(
       height: _screenSize.height * 0.2, // Este elemento ocupa el 20% del alto
-      child: PageView(
-        pageSnapping: true,
+      child: PageView.builder(
+        pageSnapping:
+            false, // Fijador de tope de card. Desactivado genera moviemientos mas suaves.
         controller: _pageController,
-        children: _cards(context),
+        itemCount: movies.length, // Cantidad de elementos a renderizar
+        itemBuilder: (context, i) {
+          return _card(context, movies[i]);
+        },
       ),
     );
   }
 
-  // Widget que devuelve lista de las tarjetas de películas
-  List<Widget> _cards(BuildContext context) {
+  // Widget que renderiza una tarjeta
+  Widget _card(BuildContext context, Movie movie) {
     final _screenSize = MediaQuery.of(context).size;
 
-    return movies.map((movie) {
-      return Container(
-        //margin: EdgeInsets.only(right: 10.0),
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                image: NetworkImage(movie.getPosterImg()),
-                fit: BoxFit.cover,
-                height: _screenSize.height * 0.17,
-              ),
+    return Container(
+      //margin: EdgeInsets.only(right: 10.0),
+      child: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: FadeInImage(
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              image: NetworkImage(movie.getPosterImg()),
+              fit: BoxFit.cover,
+              height: _screenSize.height * 0.17,
             ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              movie.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ],
-        ),
-      );
-    }).toList();
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Text(
+            movie.title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
+    );
   }
 }
